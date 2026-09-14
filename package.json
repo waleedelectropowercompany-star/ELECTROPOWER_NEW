@@ -1,7 +1,7 @@
 {
   "name": "electropower-new",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.4",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -36,8 +36,16 @@
   "build": {
     "appId": "com.electropower.app",
     "productName": "ElectroPower",
+    "artifactName": "ElectroPower-Setup-${version}.${ext}",
     "directories": {
-      "output": "release"
+      "output": "C:\\EP_RELEASE"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "waleedelectropowercompany-star",
+      "repo": "ELECTROPOWER_NEW",
+      "private": false,
+      "releaseType": "release"
     }
   }
 }
