@@ -1,20 +1,20 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import html2canvas from 'html2canvas'
 
 const menuItems = [
-  { id: 'dashboard', title: 'Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©', icon: 'âŒ‚', roles: ['admin', 'invoice_entry'] },
-  { id: 'employees', title: 'Ø§Ù„Ù…ÙˆØ¸ÙÙŠÙ†', icon: 'ðŸ‘¥', roles: ['admin'] },
-  { id: 'vacations', title: 'Ø§Ù„Ø¥Ø¬Ø§Ø²Ø§Øª', icon: 'ðŸ“…', roles: ['admin', 'invoice_entry'] },
-  { id: 'salaries', title: 'Ø§Ù„Ù…Ø±ØªØ¨Ø§Øª', icon: 'ðŸ’°', roles: ['admin'] },
-  { id: 'advances', title: 'Ø§Ù„Ø³Ù„Ù', icon: 'ðŸ’µ', roles: ['admin'] },
-  { id: 'purchases', title: 'Ø§Ù„Ù…Ø´ØªØ±ÙŠØ§Øª', icon: 'ðŸ›’', roles: ['admin'] },
-  { id: 'custody', title: 'Ø§Ù„Ø¹Ù‡Ø¯Ø©', icon: 'ðŸ“¦', roles: ['admin'] },
-  { id: 'invoices', title: 'Ø§Ù„ÙÙˆØ§ØªÙŠØ±', icon: 'ðŸ§¾', roles: ['admin', 'invoice_entry'] },
-  { id: 'collections', title: 'Ø§Ù„Ø´ÙŠÙƒØ§Øª ÙˆØ§Ù„ØªØ­ÙˆÙŠÙ„Ø§Øª', icon: 'ðŸ¦', roles: ['admin', 'invoice_entry'] },
-  { id: 'reports', title: 'Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±', icon: 'ðŸ“Š', roles: ['admin', 'invoice_entry'] },
+  { id: 'dashboard', title: 'الرئيسية', icon: '⌂', roles: ['admin', 'invoice_entry'] },
+  { id: 'employees', title: 'الموظفين', icon: '👥', roles: ['admin'] },
+  { id: 'vacations', title: 'الإجازات', icon: '📅', roles: ['admin', 'invoice_entry'] },
+  { id: 'salaries', title: 'المرتبات', icon: '💰', roles: ['admin'] },
+  { id: 'advances', title: 'السلف', icon: '💵', roles: ['admin'] },
+  { id: 'purchases', title: 'المشتريات', icon: '🛒', roles: ['admin'] },
+  { id: 'custody', title: 'العهدة', icon: '📦', roles: ['admin'] },
+  { id: 'invoices', title: 'الفواتير', icon: '🧾', roles: ['admin', 'invoice_entry'] },
+  { id: 'collections', title: 'الشيكات والتحويلات', icon: '🏦', roles: ['admin', 'invoice_entry'] },
+  { id: 'reports', title: 'التقارير', icon: '📊', roles: ['admin', 'invoice_entry'] },
 ]
 
 function App() {
@@ -88,7 +88,7 @@ function App() {
   if (loading) {
     return (
       <div dir="rtl" style={styles.loading}>
-        Ø¬Ø§Ø±ÙŠ Ø§Ù„ØªØ­Ù…ÙŠÙ„...
+        جاري التحميل...
       </div>
     )
   }
@@ -104,16 +104,16 @@ function App() {
           style={styles.menuButton}
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          â˜°
+          ☰
         </button>
 
         <img src="/images/logo.png" alt="Electropower" style={{height:"80px",width:"80px",objectFit:"contain",marginRight:"auto",marginLeft:"15px"}} />
         <div style={styles.headerTitle}>
           <div style={styles.companyName}>
-            Ø´Ø±ÙƒØ© Ø§Ù„ÙƒØªØ±ÙˆØ¨Ø§ÙˆØ± Ù„Ù„Ù…Ù‚Ø§ÙˆÙ„Ø§Øª
+            شركة الكتروباور للمقاولات
           </div>
           <div style={styles.companySub}>
-            Ø´Ø±ÙƒØ© Ø§Ù„ÙƒØªØ±ÙˆØ¨Ø§ÙˆØ± - ØµÙŠØ§Ù†Ø© Ø¨Ù†ÙˆÙƒ
+            شركة الكتروباور - صيانة بنوك
           </div>
         </div>
       </header>
@@ -132,23 +132,23 @@ function App() {
 
               <div>
                 <div style={styles.sidebarCompany}>
-                  Ø´Ø±ÙƒØ© Ø§Ù„ÙƒØªØ±ÙˆØ¨Ø§ÙˆØ±
+                  شركة الكتروباور
                 </div>
                 <div style={styles.sidebarSub}>
-                  ØµÙŠØ§Ù†Ø© Ø¨Ù†ÙˆÙƒ
+                  صيانة بنوك
                 </div>
               </div>
             </div>
 
             <div style={styles.userBox}>
               <strong>
-                {profile?.display_name || 'Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…'}
+                {profile?.display_name || 'المستخدم'}
               </strong>
 
               <span>
                 {role === 'admin'
-                  ? 'Ù…Ø¯ÙŠØ± Ø§Ù„Ù†Ø¸Ø§Ù…'
-                  : 'Ø¥Ø¯Ø®Ø§Ù„ Ø§Ù„ÙÙˆØ§ØªÙŠØ±'}
+                  ? 'مدير النظام'
+                  : 'إدخال الفواتير'}
               </span>
             </div>
 
@@ -176,7 +176,7 @@ function App() {
               style={styles.logoutButton}
               onClick={logout}
             >
-              ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø®Ø±ÙˆØ¬
+              تسجيل الخروج
             </button>
           </aside>
         </div>
@@ -186,17 +186,17 @@ function App() {
         <div style={styles.welcomeCard}>
           <div>
             <div style={styles.welcomeTitle}>
-              Ù…Ø±Ø­Ø¨Ù‹Ø§ {profile?.display_name || 'Ø¨Ùƒ'}
+              مرحبًا {profile?.display_name || 'بك'}
             </div>
 
             <div style={styles.welcomeText}>
               {role === 'admin'
-                ? 'Ø£Ù†Øª ØªØ³ØªØ®Ø¯Ù… Ø­Ø³Ø§Ø¨ Ù…Ø¯ÙŠØ± Ø§Ù„Ù†Ø¸Ø§Ù…'
-                : 'Ø£Ù†Øª ØªØ³ØªØ®Ø¯Ù… ØµÙ„Ø§Ø­ÙŠØ© Ø¥Ø¯Ø®Ø§Ù„ Ø§Ù„ÙÙˆØ§ØªÙŠØ±'}
+                ? 'أنت تستخدم حساب مدير النظام'
+                : 'أنت تستخدم صلاحية إدخال الفواتير'}
             </div>
           </div>
 
-          <div style={styles.userCircle}>ðŸ‘¤</div>
+          <div style={styles.userCircle}>👤</div>
         </div>
 
         <h2 style={styles.sectionTitle}>
@@ -268,7 +268,7 @@ function App() {
 }
 
 /* =========================================================
-   Ø§Ù„Ù…ÙˆØ¸ÙÙŠÙ†
+   الموظفين
 ========================================================= */
 
 function EmployeesPage({ session }) {
@@ -318,7 +318,7 @@ function EmployeesPage({ session }) {
     setMessage('')
 
     if (!form.name.trim()) {
-      setError('Ø§ÙƒØªØ¨ Ø§Ø³Ù… Ø§Ù„Ù…ÙˆØ¸Ù')
+      setError('اكتب اسم الموظف')
       return
     }
 
@@ -337,9 +337,9 @@ function EmployeesPage({ session }) {
       })
 
     if (error) {
-      setError('Ù„Ù… ÙŠØªÙ… Ø­ÙØ¸ Ø§Ù„Ù…ÙˆØ¸Ù: ' + error.message)
+      setError('لم يتم حفظ الموظف: ' + error.message)
     } else {
-      setMessage('ØªÙ… Ø­ÙØ¸ Ø§Ù„Ù…ÙˆØ¸Ù Ø¨Ù†Ø¬Ø§Ø­ âœ…')
+      setMessage('تم حفظ الموظف بنجاح ✅')
       setForm(empty)
       await load()
     }
@@ -348,7 +348,7 @@ function EmployeesPage({ session }) {
   }
 
   async function remove(id) {
-    if (!window.confirm('Ù‡Ù„ ØªØ±ÙŠØ¯ Ø­Ø°Ù Ø§Ù„Ù…ÙˆØ¸ÙØŸ')) return
+    if (!window.confirm('هل تريد حذف الموظف؟')) return
 
     const { error } = await supabase
       .from('employees')
@@ -358,43 +358,43 @@ function EmployeesPage({ session }) {
     if (error) {
       setError(error.message)
     } else {
-      setMessage('ØªÙ… Ø­Ø°Ù Ø§Ù„Ù…ÙˆØ¸Ù âœ…')
+      setMessage('تم حذف الموظف ✅')
       await load()
     }
   }
 
   return (
     <div>
-      <FormCard title="Ø¥Ø¶Ø§ÙØ© Ù…ÙˆØ¸Ù Ø¬Ø¯ÙŠØ¯">
+      <FormCard title="إضافة موظف جديد">
         <form onSubmit={save}>
           <div style={styles.formGrid}>
             <Field
-              label="Ø§Ø³Ù… Ø§Ù„Ù…ÙˆØ¸Ù"
+              label="اسم الموظف"
               value={form.name}
               onChange={(v) => update('name', v)}
             />
 
             <Field
-              label="Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ"
+              label="رقم الهاتف"
               value={form.phone}
               onChange={(v) => update('phone', v)}
             />
 
             <Field
-              label="Ø§Ù„ÙˆØ¸ÙŠÙØ©"
+              label="الوظيفة"
               value={form.job_title}
               onChange={(v) => update('job_title', v)}
             />
 
             <Field
-              label="Ø§Ù„Ù…Ø±ØªØ¨ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ"
+              label="المرتب الأساسي"
               type="number"
               value={form.base_salary}
               onChange={(v) => update('base_salary', v)}
             />
 
             <Field
-              label="Ù…Ù„Ø§Ø­Ø¸Ø§Øª"
+              label="ملاحظات"
               value={form.notes}
               onChange={(v) => update('notes', v)}
               full
@@ -407,13 +407,13 @@ function EmployeesPage({ session }) {
           />
 
           <SaveButton loading={saving}>
-            Ø­ÙØ¸ Ø§Ù„Ù…ÙˆØ¸Ù
+            حفظ الموظف
           </SaveButton>
         </form>
       </FormCard>
 
       <ListCard
-        title="Ø§Ù„Ù…ÙˆØ¸ÙÙŠÙ† Ø§Ù„Ù…Ø³Ø¬Ù„ÙŠÙ†"
+        title="الموظفين المسجلين"
         loading={loading}
         empty={!rows.length}
         onRefresh={load}
@@ -421,11 +421,11 @@ function EmployeesPage({ session }) {
         <table style={styles.table}>
           <thead>
             <tr>
-              <th style={styles.th}>Ø§Ù„Ù…ÙˆØ¸Ù</th>
-              <th style={styles.th}>Ø§Ù„Ù‡Ø§ØªÙ</th>
-              <th style={styles.th}>Ø§Ù„ÙˆØ¸ÙŠÙØ©</th>
-              <th style={styles.th}>Ø§Ù„Ù…Ø±ØªØ¨</th>
-              <th style={styles.th}>Ø¥Ø¬Ø±Ø§Ø¡</th>
+              <th style={styles.th}>الموظف</th>
+              <th style={styles.th}>الهاتف</th>
+              <th style={styles.th}>الوظيفة</th>
+              <th style={styles.th}>المرتب</th>
+              <th style={styles.th}>إجراء</th>
             </tr>
           </thead>
 
@@ -445,7 +445,7 @@ function EmployeesPage({ session }) {
                     style={styles.deleteButton}
                     onClick={() => remove(row.id)}
                   >
-                    Ø­Ø°Ù
+                    حذف
                   </button>
                 </td>
               </tr>
@@ -458,7 +458,7 @@ function EmployeesPage({ session }) {
 }
 
 /* =========================================================
-   Ø§Ù„Ø¥Ø¬Ø§Ø²Ø§Øª
+   الإجازات
 ========================================================= */
 
 function VacationsPage({ session }) {
@@ -523,12 +523,12 @@ function VacationsPage({ session }) {
     setMessage('')
 
     if (!form.employee_id) {
-      setError('Ø§Ø®ØªØ± Ø§Ù„Ù…ÙˆØ¸Ù')
+      setError('اختر الموظف')
       return
     }
 
     if (!form.date_from || !form.date_to) {
-      setError('Ø§Ø®ØªØ± ÙØªØ±Ø© Ø§Ù„Ø¥Ø¬Ø§Ø²Ø©')
+      setError('اختر فترة الإجازة')
       return
     }
 
@@ -545,7 +545,7 @@ function VacationsPage({ session }) {
     }
 
     if (days <= 0) {
-      setError('ØªØ£ÙƒØ¯ Ù…Ù† ØªØ§Ø±ÙŠØ® Ø§Ù„Ø¥Ø¬Ø§Ø²Ø©')
+      setError('تأكد من تاريخ الإجازة')
       return
     }
 
@@ -562,9 +562,9 @@ function VacationsPage({ session }) {
       })
 
     if (error) {
-      setError('Ù„Ù… ÙŠØªÙ… Ø­ÙØ¸ Ø§Ù„Ø¥Ø¬Ø§Ø²Ø©: ' + error.message)
+      setError('لم يتم حفظ الإجازة: ' + error.message)
     } else {
-      setMessage('ØªÙ… Ø­ÙØ¸ Ø§Ù„Ø¥Ø¬Ø§Ø²Ø© âœ…')
+      setMessage('تم حفظ الإجازة ✅')
 
       setForm({
         employee_id: '',
@@ -579,7 +579,7 @@ function VacationsPage({ session }) {
   }
 
   async function remove(id) {
-    if (!window.confirm('Ø­Ø°Ù Ø§Ù„Ø¥Ø¬Ø§Ø²Ø©ØŸ')) return
+    if (!window.confirm('حذف الإجازة؟')) return
 
     const { error } = await supabase
       .from('vacations')
@@ -588,7 +588,7 @@ function VacationsPage({ session }) {
 
     if (error) setError(error.message)
     else {
-      setMessage('ØªÙ… Ø§Ù„Ø­Ø°Ù âœ…')
+      setMessage('تم الحذف ✅')
       await load()
     }
   }
@@ -598,11 +598,11 @@ function VacationsPage({ session }) {
 
   return (
     <div>
-      <FormCard title="ØªØ³Ø¬ÙŠÙ„ Ø¥Ø¬Ø§Ø²Ø©">
+      <FormCard title="تسجيل إجازة">
         <form onSubmit={save}>
           <div style={styles.formGrid}>
             <SelectField
-              label="Ø§Ù„Ù…ÙˆØ¸Ù"
+              label="الموظف"
               value={form.employee_id}
               onChange={(v) =>
                 update('employee_id', v)
@@ -614,7 +614,7 @@ function VacationsPage({ session }) {
             />
 
             <Field
-              label="Ù…Ù†"
+              label="من"
               type="date"
               value={form.date_from}
               onChange={(v) => {
@@ -623,7 +623,7 @@ function VacationsPage({ session }) {
             />
 
             <Field
-              label="Ø¥Ù„Ù‰"
+              label="إلى"
               type="date"
               value={form.date_to}
               onChange={(v) => {
@@ -632,14 +632,14 @@ function VacationsPage({ session }) {
             />
 
             <Field
-              label="Ø¹Ø¯Ø¯ Ø§Ù„Ø£ÙŠØ§Ù…"
+              label="عدد الأيام"
               type="number"
               value={form.days}
               onChange={(v) => update('days', v)}
             />
 
             <Field
-              label="Ø§Ù„Ø¨ÙŠØ§Ù†"
+              label="البيان"
               value={form.statement}
               onChange={(v) => update('statement', v)}
               full
@@ -651,7 +651,7 @@ function VacationsPage({ session }) {
             style={styles.secondaryButton}
             onClick={calculateDays}
           >
-            Ø­Ø³Ø§Ø¨ Ø§Ù„Ø£ÙŠØ§Ù… Ù…Ù† Ø§Ù„ØªØ§Ø±ÙŠØ®
+            حساب الأيام من التاريخ
           </button>
 
           <Messages
@@ -659,12 +659,12 @@ function VacationsPage({ session }) {
             message={message}
           />
 
-          <SaveButton>Ø­ÙØ¸ Ø§Ù„Ø¥Ø¬Ø§Ø²Ø©</SaveButton>
+          <SaveButton>حفظ الإجازة</SaveButton>
         </form>
       </FormCard>
 
       <ListCard
-        title="Ø³Ø¬Ù„ Ø§Ù„Ø¥Ø¬Ø§Ø²Ø§Øª"
+        title="سجل الإجازات"
         loading={false}
         empty={!rows.length}
         onRefresh={load}
@@ -672,12 +672,12 @@ function VacationsPage({ session }) {
         <table style={styles.table}>
           <thead>
             <tr>
-              <th style={styles.th}>Ø§Ù„Ù…ÙˆØ¸Ù</th>
-              <th style={styles.th}>Ù…Ù†</th>
-              <th style={styles.th}>Ø¥Ù„Ù‰</th>
-              <th style={styles.th}>Ø§Ù„Ø£ÙŠØ§Ù…</th>
-              <th style={styles.th}>Ø§Ù„Ø¨ÙŠØ§Ù†</th>
-              <th style={styles.th}>Ø¥Ø¬Ø±Ø§Ø¡</th>
+              <th style={styles.th}>الموظف</th>
+              <th style={styles.th}>من</th>
+              <th style={styles.th}>إلى</th>
+              <th style={styles.th}>الأيام</th>
+              <th style={styles.th}>البيان</th>
+              <th style={styles.th}>إجراء</th>
             </tr>
           </thead>
 
@@ -704,7 +704,7 @@ function VacationsPage({ session }) {
                     style={styles.deleteButton}
                     onClick={() => remove(row.id)}
                   >
-                    Ø­Ø°Ù
+                    حذف
                   </button>
                 </td>
               </tr>
@@ -717,7 +717,7 @@ function VacationsPage({ session }) {
 }
 
 /* =========================================================
-   Ø§Ù„Ø³Ù„Ù
+   السلف
 ========================================================= */
 
 function AdvancesPage({ session }) {
@@ -771,12 +771,12 @@ function AdvancesPage({ session }) {
     )
 
     if (!form.employee_id) {
-      setError('Ø§Ø®ØªØ± Ø§Ù„Ù…ÙˆØ¸Ù')
+      setError('اختر الموظف')
       return
     }
 
     if (amount <= 0) {
-      setError('Ø§ÙƒØªØ¨ Ù‚ÙŠÙ…Ø© Ø§Ù„Ø³Ù„ÙØ©')
+      setError('اكتب قيمة السلفة')
       return
     }
 
@@ -798,10 +798,10 @@ function AdvancesPage({ session }) {
       })
 
     if (error) {
-      setError('Ù„Ù… ÙŠØªÙ… Ø­ÙØ¸ Ø§Ù„Ø³Ù„ÙØ©: ' + error.message)
+      setError('لم يتم حفظ السلفة: ' + error.message)
     } else {
       setMessage(
-        'ØªÙ… Ø­ÙØ¸ Ø§Ù„Ø³Ù„ÙØ© ÙˆØ­Ø³Ø§Ø¨ Ù‚ÙŠÙ…Ø© Ø§Ù„Ù‚Ø³Ø· ØªÙ„Ù‚Ø§Ø¦ÙŠÙ‹Ø§ âœ…'
+        'تم حفظ السلفة وحساب قيمة القسط تلقائيًا ✅'
       )
 
       setForm({
@@ -817,7 +817,7 @@ function AdvancesPage({ session }) {
   }
 
   async function remove(id) {
-    if (!window.confirm('Ø­Ø°Ù Ø§Ù„Ø³Ù„ÙØ©ØŸ')) return
+    if (!window.confirm('حذف السلفة؟')) return
 
     const { error } = await supabase
       .from('advances')
@@ -826,7 +826,7 @@ function AdvancesPage({ session }) {
 
     if (error) setError(error.message)
     else {
-      setMessage('ØªÙ… Ø§Ù„Ø­Ø°Ù âœ…')
+      setMessage('تم الحذف ✅')
       await load()
     }
   }
@@ -836,11 +836,11 @@ function AdvancesPage({ session }) {
 
   return (
     <div>
-      <FormCard title="Ø¥Ø¶Ø§ÙØ© Ø³Ù„ÙØ©">
+      <FormCard title="إضافة سلفة">
         <form onSubmit={save}>
           <div style={styles.formGrid}>
             <SelectField
-              label="Ø§Ù„Ù…ÙˆØ¸Ù"
+              label="الموظف"
               value={form.employee_id}
               onChange={(v) =>
                 update('employee_id', v)
@@ -852,21 +852,21 @@ function AdvancesPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„ØªØ§Ø±ÙŠØ®"
+              label="التاريخ"
               type="date"
               value={form.date}
               onChange={(v) => update('date', v)}
             />
 
             <Field
-              label="Ù‚ÙŠÙ…Ø© Ø§Ù„Ø³Ù„ÙØ©"
+              label="قيمة السلفة"
               type="number"
               value={form.amount}
               onChange={(v) => update('amount', v)}
             />
 
             <Field
-              label="Ø¹Ø¯Ø¯ Ø§Ù„Ø£Ù‚Ø³Ø§Ø·"
+              label="عدد الأقساط"
               type="number"
               min="1"
               value={form.installments}
@@ -876,7 +876,7 @@ function AdvancesPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„Ø¨ÙŠØ§Ù†"
+              label="البيان"
               value={form.statement}
               onChange={(v) => update('statement', v)}
               full
@@ -886,7 +886,7 @@ function AdvancesPage({ session }) {
           {form.amount &&
             Number(form.installments) > 0 && (
               <div style={styles.infoBox}>
-                Ù‚ÙŠÙ…Ø© Ø§Ù„Ù‚Ø³Ø·:
+                قيمة القسط:
                 {' '}
                 <strong>
                   {money(
@@ -902,12 +902,12 @@ function AdvancesPage({ session }) {
             message={message}
           />
 
-          <SaveButton>Ø­ÙØ¸ Ø§Ù„Ø³Ù„ÙØ©</SaveButton>
+          <SaveButton>حفظ السلفة</SaveButton>
         </form>
       </FormCard>
 
       <ListCard
-        title="Ø§Ù„Ø³Ù„Ù Ø§Ù„Ù…Ø³Ø¬Ù„Ø©"
+        title="السلف المسجلة"
         loading={false}
         empty={!rows.length}
         onRefresh={load}
@@ -915,14 +915,14 @@ function AdvancesPage({ session }) {
         <table style={styles.table}>
           <thead>
             <tr>
-              <th style={styles.th}>Ø§Ù„Ù…ÙˆØ¸Ù</th>
-              <th style={styles.th}>Ø§Ù„ØªØ§Ø±ÙŠØ®</th>
-              <th style={styles.th}>Ø§Ù„Ø³Ù„ÙØ©</th>
-              <th style={styles.th}>Ø§Ù„Ø£Ù‚Ø³Ø§Ø·</th>
-              <th style={styles.th}>Ù‚ÙŠÙ…Ø© Ø§Ù„Ù‚Ø³Ø·</th>
-              <th style={styles.th}>Ø§Ù„Ù…Ø®ØµÙˆÙ…</th>
-              <th style={styles.th}>Ø§Ù„Ù…ØªØ¨Ù‚ÙŠ</th>
-              <th style={styles.th}>Ø¥Ø¬Ø±Ø§Ø¡</th>
+              <th style={styles.th}>الموظف</th>
+              <th style={styles.th}>التاريخ</th>
+              <th style={styles.th}>السلفة</th>
+              <th style={styles.th}>الأقساط</th>
+              <th style={styles.th}>قيمة القسط</th>
+              <th style={styles.th}>المخصوم</th>
+              <th style={styles.th}>المتبقي</th>
+              <th style={styles.th}>إجراء</th>
             </tr>
           </thead>
 
@@ -955,7 +955,7 @@ function AdvancesPage({ session }) {
                     style={styles.deleteButton}
                     onClick={() => remove(row.id)}
                   >
-                    Ø­Ø°Ù
+                    حذف
                   </button>
                 </td>
               </tr>
@@ -968,7 +968,7 @@ function AdvancesPage({ session }) {
 }
 
 /* =========================================================
-   Ø§Ù„Ù…Ø±ØªØ¨Ø§Øª
+   المرتبات
 ========================================================= */
 
 function SalariesPage({ session }) {
@@ -1053,7 +1053,7 @@ function SalariesPage({ session }) {
     setMessage('')
 
     if (!form.employee_id) {
-      setError('Ø§Ø®ØªØ± Ø§Ù„Ù…ÙˆØ¸Ù')
+      setError('اختر الموظف')
       return
     }
 
@@ -1063,7 +1063,7 @@ function SalariesPage({ session }) {
     const net = base - advance - deductions
 
     if (base <= 0) {
-      setError('Ø§Ù„Ù…Ø±ØªØ¨ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ ØºÙŠØ± ØµØ­ÙŠØ­')
+      setError('المرتب الأساسي غير صحيح')
       return
     }
 
@@ -1082,13 +1082,13 @@ function SalariesPage({ session }) {
       })
 
     if (error) {
-      setError('Ù„Ù… ÙŠØªÙ… Ø­ÙØ¸ Ø§Ù„Ù…Ø±ØªØ¨: ' + error.message)
+      setError('لم يتم حفظ المرتب: ' + error.message)
       return
     }
 
     /*
-      Ø®ØµÙ… Ù‚Ø³Ø· Ø§Ù„Ø³Ù„ÙØ© ØªÙ„Ù‚Ø§Ø¦ÙŠÙ‹Ø§.
-      Ù„Ø§ ÙŠØªÙ… Ø®ØµÙ… Ø£ÙƒØ«Ø± Ù…Ù† Ø§Ù„Ù…ØªØ¨Ù‚ÙŠ.
+      خصم قسط السلفة تلقائيًا.
+      لا يتم خصم أكثر من المتبقي.
     */
     let remainingToDeduct = advance
 
@@ -1128,10 +1128,10 @@ function SalariesPage({ session }) {
     }
 
     setMessage(
-      `ØªÙ… Ø­ÙØ¸ Ù…Ø±ØªØ¨ ${form.month.slice(
+      `تم حفظ مرتب ${form.month.slice(
         0,
         7
-      )} ÙˆØ®ØµÙ… Ø§Ù„Ø³Ù„Ù ØªÙ„Ù‚Ø§Ø¦ÙŠÙ‹Ø§ âœ…`
+      )} وخصم السلف تلقائيًا ✅`
     )
 
     setForm({
@@ -1148,7 +1148,7 @@ function SalariesPage({ session }) {
   }
 
   async function remove(id) {
-    if (!window.confirm('Ø­Ø°Ù Ø§Ù„Ù…Ø±ØªØ¨ØŸ')) return
+    if (!window.confirm('حذف المرتب؟')) return
 
     const { error } = await supabase
       .from('salaries')
@@ -1157,7 +1157,7 @@ function SalariesPage({ session }) {
 
     if (error) setError(error.message)
     else {
-      setMessage('ØªÙ… Ø§Ù„Ø­Ø°Ù âœ…')
+      setMessage('تم الحذف ✅')
       await load()
     }
   }
@@ -1176,11 +1176,11 @@ function SalariesPage({ session }) {
 
   return (
     <div>
-      <FormCard title="ØªØ³Ø¬ÙŠÙ„ Ù…Ø±ØªØ¨">
+      <FormCard title="تسجيل مرتب">
         <form onSubmit={save}>
           <div style={styles.formGrid}>
             <SelectField
-              label="Ø§Ù„Ù…ÙˆØ¸Ù"
+              label="الموظف"
               value={form.employee_id}
               onChange={selectEmployee}
               options={employees.map((e) => ({
@@ -1190,14 +1190,14 @@ function SalariesPage({ session }) {
             />
 
             <Field
-              label="Ø´Ù‡Ø± Ø§Ù„Ù…Ø±ØªØ¨"
+              label="شهر المرتب"
               type="date"
               value={form.month}
               onChange={(v) => update('month', v)}
             />
 
             <Field
-              label="Ø§Ù„Ù…Ø±ØªØ¨ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ"
+              label="المرتب الأساسي"
               type="number"
               value={form.base_salary}
               onChange={(v) =>
@@ -1207,7 +1207,7 @@ function SalariesPage({ session }) {
 
             <div>
               <label style={styles.label}>
-                Ø§Ù„Ø³Ù„Ù Ø§Ù„Ù…Ø³ØªØ­Ù‚Ø© Ù‡Ø°Ø§ Ø§Ù„Ø´Ù‡Ø±
+                السلف المستحقة هذا الشهر
               </label>
 
               <div style={styles.readonlyBox}>
@@ -1216,7 +1216,7 @@ function SalariesPage({ session }) {
             </div>
 
             <Field
-              label="Ø§Ù„Ø®ØµÙˆÙ…Ø§Øª"
+              label="الخصومات"
               type="number"
               value={form.deductions}
               onChange={(v) =>
@@ -1226,7 +1226,7 @@ function SalariesPage({ session }) {
 
             <div>
               <label style={styles.label}>
-                ØµØ§ÙÙŠ Ø§Ù„Ù…Ø±ØªØ¨
+                صافي المرتب
               </label>
 
               <div style={styles.netBox}>
@@ -1235,7 +1235,7 @@ function SalariesPage({ session }) {
             </div>
 
             <Field
-              label="Ø§Ù„Ø¨ÙŠØ§Ù†"
+              label="البيان"
               value={form.statement}
               onChange={(v) =>
                 update('statement', v)
@@ -1249,12 +1249,12 @@ function SalariesPage({ session }) {
             message={message}
           />
 
-          <SaveButton>Ø­ÙØ¸ Ø§Ù„Ù…Ø±ØªØ¨</SaveButton>
+          <SaveButton>حفظ المرتب</SaveButton>
         </form>
       </FormCard>
 
       <ListCard
-        title="Ø³Ø¬Ù„ Ø§Ù„Ù…Ø±ØªØ¨Ø§Øª"
+        title="سجل المرتبات"
         loading={false}
         empty={!rows.length}
         onRefresh={load}
@@ -1262,13 +1262,13 @@ function SalariesPage({ session }) {
         <table style={styles.table}>
           <thead>
             <tr>
-              <th style={styles.th}>Ø§Ù„Ù…ÙˆØ¸Ù</th>
-              <th style={styles.th}>Ø§Ù„Ø´Ù‡Ø±</th>
-              <th style={styles.th}>Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ</th>
-              <th style={styles.th}>Ø§Ù„Ø³Ù„Ù</th>
-              <th style={styles.th}>Ø§Ù„Ø®ØµÙˆÙ…Ø§Øª</th>
-              <th style={styles.th}>Ø§Ù„ØµØ§ÙÙŠ</th>
-              <th style={styles.th}>Ø¥Ø¬Ø±Ø§Ø¡</th>
+              <th style={styles.th}>الموظف</th>
+              <th style={styles.th}>الشهر</th>
+              <th style={styles.th}>الأساسي</th>
+              <th style={styles.th}>السلف</th>
+              <th style={styles.th}>الخصومات</th>
+              <th style={styles.th}>الصافي</th>
+              <th style={styles.th}>إجراء</th>
             </tr>
           </thead>
 
@@ -1300,7 +1300,7 @@ function SalariesPage({ session }) {
                     style={styles.deleteButton}
                     onClick={() => remove(row.id)}
                   >
-                    Ø­Ø°Ù
+                    حذف
                   </button>
                 </td>
               </tr>
@@ -1313,7 +1313,7 @@ function SalariesPage({ session }) {
 }
 
 /* =========================================================
-   Ø§Ù„Ù…Ø´ØªØ±ÙŠØ§Øª
+   المشتريات
 ========================================================= */
 
 function PurchasesPage({ session }) {
@@ -1358,7 +1358,7 @@ function PurchasesPage({ session }) {
     setMessage('')
 
     if (!form.item.trim()) {
-      setError('Ø§ÙƒØªØ¨ Ø§Ù„ØµÙ†Ù')
+      setError('اكتب الصنف')
       return
     }
 
@@ -1367,7 +1367,7 @@ function PurchasesPage({ session }) {
     const total = quantity * price
 
     if (quantity <= 0 || price <= 0) {
-      setError('Ø£Ø¯Ø®Ù„ Ø§Ù„ÙƒÙ…ÙŠØ© ÙˆØ§Ù„Ø³Ø¹Ø±')
+      setError('أدخل الكمية والسعر')
       return
     }
 
@@ -1385,9 +1385,9 @@ function PurchasesPage({ session }) {
       })
 
     if (error) {
-      setError('Ù„Ù… ÙŠØªÙ… Ø­ÙØ¸ Ø§Ù„Ù…Ø´ØªØ±ÙŠØ§Øª: ' + error.message)
+      setError('لم يتم حفظ المشتريات: ' + error.message)
     } else {
-      setMessage('ØªÙ… Ø­ÙØ¸ Ø§Ù„Ù…Ø´ØªØ±ÙŠØ§Øª âœ…')
+      setMessage('تم حفظ المشتريات ✅')
 
       setForm({
         date: new Date().toISOString().slice(0, 10),
@@ -1402,7 +1402,7 @@ function PurchasesPage({ session }) {
   }
 
   async function remove(id) {
-    if (!window.confirm('Ø­Ø°Ù Ø§Ù„Ø¹Ù…Ù„ÙŠØ©ØŸ')) return
+    if (!window.confirm('حذف العملية؟')) return
 
     const { error } = await supabase
       .from('purchases')
@@ -1419,24 +1419,24 @@ function PurchasesPage({ session }) {
 
   return (
     <div>
-      <FormCard title="Ø¥Ø¶Ø§ÙØ© Ù…Ø´ØªØ±ÙŠØ§Øª">
+      <FormCard title="إضافة مشتريات">
         <form onSubmit={save}>
           <div style={styles.formGrid}>
             <Field
-              label="Ø§Ù„ØªØ§Ø±ÙŠØ®"
+              label="التاريخ"
               type="date"
               value={form.date}
               onChange={(v) => update('date', v)}
             />
 
             <Field
-              label="Ø§Ù„ØµÙ†Ù"
+              label="الصنف"
               value={form.item}
               onChange={(v) => update('item', v)}
             />
 
             <Field
-              label="Ø§Ù„ÙƒÙ…ÙŠØ©"
+              label="الكمية"
               type="number"
               value={form.quantity}
               onChange={(v) =>
@@ -1445,7 +1445,7 @@ function PurchasesPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„Ø³Ø¹Ø±"
+              label="السعر"
               type="number"
               value={form.price}
               onChange={(v) => update('price', v)}
@@ -1453,7 +1453,7 @@ function PurchasesPage({ session }) {
 
             <div>
               <label style={styles.label}>
-                Ø§Ù„Ø¥Ø¬Ù…Ø§Ù„ÙŠ
+                الإجمالي
               </label>
 
               <div style={styles.netBox}>
@@ -1462,7 +1462,7 @@ function PurchasesPage({ session }) {
             </div>
 
             <Field
-              label="Ø§Ù„Ø¨ÙŠØ§Ù†"
+              label="البيان"
               value={form.statement}
               onChange={(v) =>
                 update('statement', v)
@@ -1476,12 +1476,12 @@ function PurchasesPage({ session }) {
             message={message}
           />
 
-          <SaveButton>Ø­ÙØ¸ Ø§Ù„Ù…Ø´ØªØ±ÙŠØ§Øª</SaveButton>
+          <SaveButton>حفظ المشتريات</SaveButton>
         </form>
       </FormCard>
 
       <ListCard
-        title="Ø³Ø¬Ù„ Ø§Ù„Ù…Ø´ØªØ±ÙŠØ§Øª"
+        title="سجل المشتريات"
         loading={false}
         empty={!rows.length}
         onRefresh={load}
@@ -1489,13 +1489,13 @@ function PurchasesPage({ session }) {
         <table style={styles.table}>
           <thead>
             <tr>
-              <th style={styles.th}>Ø§Ù„ØªØ§Ø±ÙŠØ®</th>
-              <th style={styles.th}>Ø§Ù„ØµÙ†Ù</th>
-              <th style={styles.th}>Ø§Ù„ÙƒÙ…ÙŠØ©</th>
-              <th style={styles.th}>Ø§Ù„Ø³Ø¹Ø±</th>
-              <th style={styles.th}>Ø§Ù„Ø¥Ø¬Ù…Ø§Ù„ÙŠ</th>
-              <th style={styles.th}>Ø§Ù„Ø¨ÙŠØ§Ù†</th>
-              <th style={styles.th}>Ø¥Ø¬Ø±Ø§Ø¡</th>
+              <th style={styles.th}>التاريخ</th>
+              <th style={styles.th}>الصنف</th>
+              <th style={styles.th}>الكمية</th>
+              <th style={styles.th}>السعر</th>
+              <th style={styles.th}>الإجمالي</th>
+              <th style={styles.th}>البيان</th>
+              <th style={styles.th}>إجراء</th>
             </tr>
           </thead>
 
@@ -1521,7 +1521,7 @@ function PurchasesPage({ session }) {
                     style={styles.deleteButton}
                     onClick={() => remove(row.id)}
                   >
-                    Ø­Ø°Ù
+                    حذف
                   </button>
                 </td>
               </tr>
@@ -1534,7 +1534,7 @@ function PurchasesPage({ session }) {
 }
 
 /* =========================================================
-   Ø§Ù„Ø¹Ù‡Ø¯Ø© + ØªØµÙÙŠØ© Ø§Ù„Ø¹Ù‡Ø¯Ø©
+   العهدة + تصفية العهدة
 ========================================================= */
 
 function CustodyPage({ session }) {
@@ -1607,12 +1607,12 @@ function CustodyPage({ session }) {
     const amount = Number(form.amount || 0)
 
     if (!form.employee_id) {
-      setError('Ø§Ø®ØªØ± Ø§Ù„Ù…ÙˆØ¸Ù')
+      setError('اختر الموظف')
       return
     }
 
     if (amount <= 0) {
-      setError('Ø§ÙƒØªØ¨ Ù‚ÙŠÙ…Ø© Ø§Ù„Ø¹Ù‡Ø¯Ø©')
+      setError('اكتب قيمة العهدة')
       return
     }
 
@@ -1628,9 +1628,9 @@ function CustodyPage({ session }) {
       })
 
     if (error) {
-      setError('Ù„Ù… ÙŠØªÙ… Ø­ÙØ¸ Ø§Ù„Ø¹Ù‡Ø¯Ø©: ' + error.message)
+      setError('لم يتم حفظ العهدة: ' + error.message)
     } else {
-      setMessage('ØªÙ… ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¹Ù‡Ø¯Ø© âœ…')
+      setMessage('تم تسجيل العهدة ✅')
 
       setForm({
         employee_id: '',
@@ -1659,17 +1659,17 @@ function CustodyPage({ session }) {
     const total = quantity * price
 
     if (!settlementForm.custody_id) {
-      setError('Ø§Ø®ØªØ± Ø§Ù„Ø¹Ù‡Ø¯Ø©')
+      setError('اختر العهدة')
       return
     }
 
     if (!settlementForm.item.trim()) {
-      setError('Ø§ÙƒØªØ¨ Ø§Ù„ØµÙ†Ù')
+      setError('اكتب الصنف')
       return
     }
 
     if (total <= 0) {
-      setError('Ø£Ø¯Ø®Ù„ Ø§Ù„ÙƒÙ…ÙŠØ© ÙˆØ§Ù„Ø³Ø¹Ø±')
+      setError('أدخل الكمية والسعر')
       return
     }
 
@@ -1679,7 +1679,7 @@ function CustodyPage({ session }) {
 
     if (total > balance) {
       setError(
-        `Ù‚ÙŠÙ…Ø© Ø§Ù„ØªØµÙÙŠØ© Ø£ÙƒØ¨Ø± Ù…Ù† Ø±ØµÙŠØ¯ Ø§Ù„Ø¹Ù‡Ø¯Ø© Ø§Ù„Ù…ØªØ¨Ù‚ÙŠ (${money(
+        `قيمة التصفية أكبر من رصيد العهدة المتبقي (${money(
           balance
         )})`
       )
@@ -1703,12 +1703,12 @@ function CustodyPage({ session }) {
 
     if (error) {
       setError(
-        'Ù„Ù… ÙŠØªÙ… Ø­ÙØ¸ ØªØµÙÙŠØ© Ø§Ù„Ø¹Ù‡Ø¯Ø©: ' +
+        'لم يتم حفظ تصفية العهدة: ' +
           error.message
       )
     } else {
       setMessage(
-        'ØªÙ… Ø­ÙØ¸ ØªØµÙÙŠØ© Ø§Ù„Ø¹Ù‡Ø¯Ø© ÙˆØ®ØµÙ…Ù‡Ø§ Ù…Ù† Ø§Ù„Ø±ØµÙŠØ¯ âœ…'
+        'تم حفظ تصفية العهدة وخصمها من الرصيد ✅'
       )
 
       setSettlementForm({
@@ -1741,7 +1741,7 @@ function CustodyPage({ session }) {
   }
 
   async function removeCustody(id) {
-    if (!window.confirm('Ø­Ø°Ù Ø§Ù„Ø¹Ù‡Ø¯Ø© Ø¨Ø§Ù„ÙƒØ§Ù…Ù„ØŸ'))
+    if (!window.confirm('حذف العهدة بالكامل؟'))
       return
 
     const { error } = await supabase
@@ -1751,13 +1751,13 @@ function CustodyPage({ session }) {
 
     if (error) setError(error.message)
     else {
-      setMessage('ØªÙ… Ø­Ø°Ù Ø§Ù„Ø¹Ù‡Ø¯Ø© âœ…')
+      setMessage('تم حذف العهدة ✅')
       await load()
     }
   }
 
   async function removeSettlement(id) {
-    if (!window.confirm('Ø­Ø°Ù Ø¹Ù…Ù„ÙŠØ© Ø§Ù„ØªØµÙÙŠØ©ØŸ'))
+    if (!window.confirm('حذف عملية التصفية؟'))
       return
 
     const { error } = await supabase
@@ -1767,7 +1767,7 @@ function CustodyPage({ session }) {
 
     if (error) setError(error.message)
     else {
-      setMessage('ØªÙ… Ø­Ø°Ù Ø§Ù„ØªØµÙÙŠØ© âœ…')
+      setMessage('تم حذف التصفية ✅')
       await load()
     }
   }
@@ -1781,11 +1781,11 @@ function CustodyPage({ session }) {
 
   return (
     <div>
-      <FormCard title="ØªØ³Ø¬ÙŠÙ„ Ø¹Ù‡Ø¯Ø© Ø¬Ø¯ÙŠØ¯Ø©">
+      <FormCard title="تسجيل عهدة جديدة">
         <form onSubmit={saveCustody}>
           <div style={styles.formGrid}>
             <SelectField
-              label="Ø§Ù„Ù…ÙˆØ¸Ù"
+              label="الموظف"
               value={form.employee_id}
               onChange={(v) =>
                 update('employee_id', v)
@@ -1797,14 +1797,14 @@ function CustodyPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„ØªØ§Ø±ÙŠØ®"
+              label="التاريخ"
               type="date"
               value={form.date}
               onChange={(v) => update('date', v)}
             />
 
             <Field
-              label="Ù‚ÙŠÙ…Ø© Ø§Ù„Ø¹Ù‡Ø¯Ø©"
+              label="قيمة العهدة"
               type="number"
               value={form.amount}
               onChange={(v) =>
@@ -1813,7 +1813,7 @@ function CustodyPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„Ø¨ÙŠØ§Ù†"
+              label="البيان"
               value={form.statement}
               onChange={(v) =>
                 update('statement', v)
@@ -1827,12 +1827,12 @@ function CustodyPage({ session }) {
             message={message}
           />
 
-          <SaveButton>Ø­ÙØ¸ Ø§Ù„Ø¹Ù‡Ø¯Ø©</SaveButton>
+          <SaveButton>حفظ العهدة</SaveButton>
         </form>
       </FormCard>
 
       <ListCard
-        title="Ø§Ù„Ø¹Ù‡Ø¯ Ø§Ù„Ù…Ø³Ø¬Ù„Ø©"
+        title="العهد المسجلة"
         loading={false}
         empty={!custody.length}
         onRefresh={load}
@@ -1840,12 +1840,12 @@ function CustodyPage({ session }) {
         <table style={styles.table}>
           <thead>
             <tr>
-              <th style={styles.th}>Ø§Ù„Ù…ÙˆØ¸Ù</th>
-              <th style={styles.th}>Ø§Ù„ØªØ§Ø±ÙŠØ®</th>
-              <th style={styles.th}>Ù‚ÙŠÙ…Ø© Ø§Ù„Ø¹Ù‡Ø¯Ø©</th>
-              <th style={styles.th}>Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…</th>
-              <th style={styles.th}>Ø§Ù„Ù…ØªØ¨Ù‚ÙŠ</th>
-              <th style={styles.th}>Ø¥Ø¬Ø±Ø§Ø¡</th>
+              <th style={styles.th}>الموظف</th>
+              <th style={styles.th}>التاريخ</th>
+              <th style={styles.th}>قيمة العهدة</th>
+              <th style={styles.th}>المستخدم</th>
+              <th style={styles.th}>المتبقي</th>
+              <th style={styles.th}>إجراء</th>
             </tr>
           </thead>
 
@@ -1884,7 +1884,7 @@ function CustodyPage({ session }) {
                       removeCustody(row.id)
                     }
                   >
-                    Ø­Ø°Ù
+                    حذف
                   </button>
                 </td>
               </tr>
@@ -1893,12 +1893,12 @@ function CustodyPage({ session }) {
         </table>
       </ListCard>
 
-      <FormCard title="ØªØµÙÙŠØ© Ø§Ù„Ø¹Ù‡Ø¯Ø©">
+      <FormCard title="تصفية العهدة">
         <form onSubmit={saveSettlement}>
           <div style={styles.formGrid}>
             <div>
               <label style={styles.label}>
-                Ø§Ù„Ø¹Ù‡Ø¯Ø©
+                العهدة
               </label>
 
               <select
@@ -1912,7 +1912,7 @@ function CustodyPage({ session }) {
                 }
               >
                 <option value="">
-                  Ø§Ø®ØªØ± Ø§Ù„Ø¹Ù‡Ø¯Ø©
+                  اختر العهدة
                 </option>
 
                 {custody.map((c) => (
@@ -1923,7 +1923,7 @@ function CustodyPage({ session }) {
                     {employeeName(
                       c.employee_id
                     )}{' '}
-                    - Ø§Ù„Ù…ØªØ¨Ù‚ÙŠ:{' '}
+                    - المتبقي:{' '}
                     {money(custodyBalance(c.id))}
                   </option>
                 ))}
@@ -1931,7 +1931,7 @@ function CustodyPage({ session }) {
             </div>
 
             <Field
-              label="Ø§Ù„ØªØ§Ø±ÙŠØ®"
+              label="التاريخ"
               type="date"
               value={settlementForm.date}
               onChange={(v) =>
@@ -1940,7 +1940,7 @@ function CustodyPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„ØµÙ†Ù"
+              label="الصنف"
               value={settlementForm.item}
               onChange={(v) =>
                 updateSettlement('item', v)
@@ -1948,7 +1948,7 @@ function CustodyPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„ÙƒÙ…ÙŠØ©"
+              label="الكمية"
               type="number"
               value={settlementForm.quantity}
               onChange={(v) =>
@@ -1960,7 +1960,7 @@ function CustodyPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„Ø³Ø¹Ø±"
+              label="السعر"
               type="number"
               value={settlementForm.price}
               onChange={(v) =>
@@ -1973,7 +1973,7 @@ function CustodyPage({ session }) {
 
             <div>
               <label style={styles.label}>
-                Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„ØªØµÙÙŠØ©
+                إجمالي التصفية
               </label>
 
               <div style={styles.netBox}>
@@ -1982,7 +1982,7 @@ function CustodyPage({ session }) {
             </div>
 
             <Field
-              label="Ø§Ù„Ø¨ÙŠØ§Ù†"
+              label="البيان"
               value={settlementForm.statement}
               onChange={(v) =>
                 updateSettlement(
@@ -2000,13 +2000,13 @@ function CustodyPage({ session }) {
           />
 
           <SaveButton>
-            Ø­ÙØ¸ ØªØµÙÙŠØ© Ø§Ù„Ø¹Ù‡Ø¯Ø©
+            حفظ تصفية العهدة
           </SaveButton>
         </form>
       </FormCard>
 
       <ListCard
-        title="Ø¹Ù…Ù„ÙŠØ§Øª ØªØµÙÙŠØ© Ø§Ù„Ø¹Ù‡Ø¯"
+        title="عمليات تصفية العهد"
         loading={false}
         empty={!settlements.length}
         onRefresh={load}
@@ -2014,13 +2014,13 @@ function CustodyPage({ session }) {
         <table style={styles.table}>
           <thead>
             <tr>
-              <th style={styles.th}>Ø§Ù„ØªØ§Ø±ÙŠØ®</th>
-              <th style={styles.th}>Ø§Ù„Ø¹Ù‡Ø¯Ø©</th>
-              <th style={styles.th}>Ø§Ù„ØµÙ†Ù</th>
-              <th style={styles.th}>Ø§Ù„ÙƒÙ…ÙŠØ©</th>
-              <th style={styles.th}>Ø§Ù„Ø³Ø¹Ø±</th>
-              <th style={styles.th}>Ø§Ù„Ø¥Ø¬Ù…Ø§Ù„ÙŠ</th>
-              <th style={styles.th}>Ø¥Ø¬Ø±Ø§Ø¡</th>
+              <th style={styles.th}>التاريخ</th>
+              <th style={styles.th}>العهدة</th>
+              <th style={styles.th}>الصنف</th>
+              <th style={styles.th}>الكمية</th>
+              <th style={styles.th}>السعر</th>
+              <th style={styles.th}>الإجمالي</th>
+              <th style={styles.th}>إجراء</th>
             </tr>
           </thead>
 
@@ -2069,7 +2069,7 @@ function CustodyPage({ session }) {
                         )
                       }
                     >
-                      Ø­Ø°Ù
+                      حذف
                     </button>
                   </td>
                 </tr>
@@ -2083,7 +2083,7 @@ function CustodyPage({ session }) {
 }
 
 /* =========================================================
-   Ø§Ù„Ø´ÙŠÙƒØ§Øª ÙˆØ§Ù„ØªØ­ÙˆÙŠÙ„Ø§Øª
+   الشيكات والتحويلات
 ========================================================= */
 
 function CollectionsPage({ session }) {
@@ -2091,7 +2091,7 @@ function CollectionsPage({ session }) {
   const [invoices, setInvoices] = useState([])
 
   const [form, setForm] = useState({
-    type: 'Ø´ÙŠÙƒØ§Øª',
+    type: 'شيكات',
     number: '',
     bank: '',
     date: new Date().toISOString().slice(0, 10),
@@ -2117,7 +2117,7 @@ function CollectionsPage({ session }) {
       supabase
         .from('invoices')
         .select('*')
-        .eq('status', 'ØºÙŠØ± Ù…Ø­ØµÙ„Ø©')
+        .eq('status', 'غير محصلة')
         .order('date', { ascending: false }),
     ])
 
@@ -2161,17 +2161,17 @@ function CollectionsPage({ session }) {
     setMessage('')
 
     if (!form.number.trim()) {
-      setError('Ø§ÙƒØªØ¨ Ø±Ù‚Ù… Ø§Ù„Ø´ÙŠÙƒ Ø£Ùˆ Ø§Ù„ØªØ­ÙˆÙŠÙ„')
+      setError('اكتب رقم الشيك أو التحويل')
       return
     }
 
     if (!form.bank.trim()) {
-      setError('Ø§ÙƒØªØ¨ Ø§Ø³Ù… Ø§Ù„Ø¨Ù†Ùƒ')
+      setError('اكتب اسم البنك')
       return
     }
 
     if (!form.invoice_ids.length) {
-      setError('Ø§Ø®ØªØ± ÙØ§ØªÙˆØ±Ø© Ø£Ùˆ Ø£ÙƒØ«Ø±')
+      setError('اختر فاتورة أو أكثر')
       return
     }
 
@@ -2198,22 +2198,22 @@ function CollectionsPage({ session }) {
 
     if (collectionError) {
       setError(
-        'Ù„Ù… ÙŠØªÙ… Ø­ÙØ¸ Ø§Ù„ØªØ­ØµÙŠÙ„: ' +
+        'لم يتم حفظ التحصيل: ' +
           collectionError.message
       )
       return
     }
 
     /*
-      Ø±Ø¨Ø· Ø§Ù„ÙÙˆØ§ØªÙŠØ± Ø¨Ø§Ù„Ø´ÙŠÙƒ/Ø§Ù„ØªØ­ÙˆÙŠÙ„
-      ÙˆØªØ­ÙˆÙŠÙ„ Ø­Ø§Ù„ØªÙ‡Ø§ ØªÙ„Ù‚Ø§Ø¦ÙŠÙ‹Ø§ Ø¥Ù„Ù‰ Ù…Ø­ØµÙ„Ø©.
+      ربط الفواتير بالشيك/التحويل
+      وتحويل حالتها تلقائيًا إلى محصلة.
     */
 
     for (const invoice of selectedInvoices) {
       const { error } = await supabase
         .from('invoices')
         .update({
-          status: 'Ù…Ø­ØµÙ„Ø©',
+          status: 'محصلة',
           collection_id: collectionId,
           collection_type: form.type,
           collection_number:
@@ -2228,7 +2228,7 @@ function CollectionsPage({ session }) {
 
       if (error) {
         setError(
-          'ØªÙ… Ø­ÙØ¸ Ø§Ù„ØªØ­ØµÙŠÙ„ ÙˆÙ„ÙƒÙ† Ø­Ø¯Ø« Ø®Ø·Ø£ ÙÙŠ Ø±Ø¨Ø· Ø§Ù„ÙØ§ØªÙˆØ±Ø©: ' +
+          'تم حفظ التحصيل ولكن حدث خطأ في ربط الفاتورة: ' +
             error.message
         )
         await load()
@@ -2237,11 +2237,11 @@ function CollectionsPage({ session }) {
     }
 
     setMessage(
-      'ØªÙ… ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø´ÙŠÙƒ/Ø§Ù„ØªØ­ÙˆÙŠÙ„ ÙˆØªØ­ÙˆÙŠÙ„ Ø§Ù„ÙÙˆØ§ØªÙŠØ± Ø¥Ù„Ù‰ Ù…Ø­ØµÙ„Ø© ØªÙ„Ù‚Ø§Ø¦ÙŠÙ‹Ø§ âœ…'
+      'تم تسجيل الشيك/التحويل وتحويل الفواتير إلى محصلة تلقائيًا ✅'
     )
 
     setForm({
-      type: 'Ø´ÙŠÙƒØ§Øª',
+      type: 'شيكات',
       number: '',
       bank: '',
       date: new Date().toISOString().slice(0, 10),
@@ -2254,7 +2254,7 @@ function CollectionsPage({ session }) {
   }
 
   async function remove(id) {
-    if (!window.confirm('Ø­Ø°Ù Ø¹Ù…Ù„ÙŠØ© Ø§Ù„ØªØ­ØµÙŠÙ„ØŸ'))
+    if (!window.confirm('حذف عملية التحصيل؟'))
       return
 
     const row = rows.find((x) => x.id === id)
@@ -2270,8 +2270,8 @@ function CollectionsPage({ session }) {
     }
 
     /*
-      Ø¹Ù†Ø¯ Ø­Ø°Ù Ø§Ù„ØªØ­ØµÙŠÙ„ Ù†Ø¹ÙŠØ¯ Ø§Ù„ÙÙˆØ§ØªÙŠØ± Ø§Ù„Ù…Ø±ØªØ¨Ø·Ø©
-      Ø¥Ù„Ù‰ ØºÙŠØ± Ù…Ø­ØµÙ„Ø©.
+      عند حذف التحصيل نعيد الفواتير المرتبطة
+      إلى غير محصلة.
     */
 
     if (row?.invoice_ids?.length) {
@@ -2279,7 +2279,7 @@ function CollectionsPage({ session }) {
         await supabase
           .from('invoices')
           .update({
-            status: 'ØºÙŠØ± Ù…Ø­ØµÙ„Ø©',
+            status: 'غير محصلة',
             collection_id: null,
             collection_type: null,
             collection_number: null,
@@ -2291,35 +2291,35 @@ function CollectionsPage({ session }) {
       }
     }
 
-    setMessage('ØªÙ… Ø­Ø°Ù Ø§Ù„ØªØ­ØµÙŠÙ„ ÙˆØ¥Ø¹Ø§Ø¯Ø© Ø§Ù„ÙÙˆØ§ØªÙŠØ± Ù„ØºÙŠØ± Ù…Ø­ØµÙ„Ø© âœ…')
+    setMessage('تم حذف التحصيل وإعادة الفواتير لغير محصلة ✅')
     await load()
   }
 
   return (
     <div>
-      <FormCard title="ØªØ³Ø¬ÙŠÙ„ Ø´ÙŠÙƒ Ø£Ùˆ ØªØ­ÙˆÙŠÙ„ Ø¨Ù†ÙƒÙŠ">
+      <FormCard title="تسجيل شيك أو تحويل بنكي">
         <form onSubmit={save}>
           <div style={styles.formGrid}>
             <SelectField
-              label="Ù†ÙˆØ¹ Ø§Ù„ØªØ­ØµÙŠÙ„"
+              label="نوع التحصيل"
               value={form.type}
               onChange={(v) =>
                 update('type', v)
               }
               options={[
                 {
-                  value: 'Ø´ÙŠÙƒØ§Øª',
-                  label: 'Ø´ÙŠÙƒØ§Øª',
+                  value: 'شيكات',
+                  label: 'شيكات',
                 },
                 {
-                  value: 'ØªØ­ÙˆÙŠÙ„Ø§Øª Ø¨Ù†ÙƒÙŠØ©',
-                  label: 'ØªØ­ÙˆÙŠÙ„Ø§Øª Ø¨Ù†ÙƒÙŠØ©',
+                  value: 'تحويلات بنكية',
+                  label: 'تحويلات بنكية',
                 },
               ]}
             />
 
             <Field
-              label="Ø±Ù‚Ù… Ø§Ù„Ø´ÙŠÙƒ / Ø§Ù„ØªØ­ÙˆÙŠÙ„"
+              label="رقم الشيك / التحويل"
               value={form.number}
               onChange={(v) =>
                 update('number', v)
@@ -2327,7 +2327,7 @@ function CollectionsPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„Ø¨Ù†Ùƒ"
+              label="البنك"
               value={form.bank}
               onChange={(v) =>
                 update('bank', v)
@@ -2335,7 +2335,7 @@ function CollectionsPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„ØªØ§Ø±ÙŠØ®"
+              label="التاريخ"
               type="date"
               value={form.date}
               onChange={(v) =>
@@ -2344,7 +2344,7 @@ function CollectionsPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„Ù…Ø¨Ù„Øº"
+              label="المبلغ"
               type="number"
               value={form.amount}
               onChange={(v) =>
@@ -2353,7 +2353,7 @@ function CollectionsPage({ session }) {
             />
 
             <Field
-              label="Ø§Ù„Ø¨ÙŠØ§Ù†"
+              label="البيان"
               value={form.statement}
               onChange={(v) =>
                 update('statement', v)
@@ -2364,12 +2364,12 @@ function CollectionsPage({ session }) {
 
           <div style={styles.invoicePicker}>
             <h3 style={{ marginTop: 0 }}>
-              Ø§Ù„ÙÙˆØ§ØªÙŠØ± ØºÙŠØ± Ø§Ù„Ù…Ø­ØµÙ„Ø©
+              الفواتير غير المحصلة
             </h3>
 
             {invoices.length === 0 ? (
               <div style={styles.noData}>
-                Ù„Ø§ ØªÙˆØ¬Ø¯ ÙÙˆØ§ØªÙŠØ± ØºÙŠØ± Ù…Ø­ØµÙ„Ø©.
+                لا توجد فواتير غير محصلة.
               </div>
             ) : (
               invoices.map((invoice) => (
@@ -2390,7 +2390,7 @@ function CollectionsPage({ session }) {
                   />
 
                   <span>
-                    ÙØ§ØªÙˆØ±Ø© Ø±Ù‚Ù…{' '}
+                    فاتورة رقم{' '}
                     <strong>
                       {invoice.invoice_number}
                     </strong>
@@ -2405,7 +2405,7 @@ function CollectionsPage({ session }) {
 
             {selectedInvoices.length > 0 && (
               <div style={styles.infoBox}>
-                Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„ÙÙˆØ§ØªÙŠØ± Ø§Ù„Ù…Ø®ØªØ§Ø±Ø©:
+                إجمالي الفواتير المختارة:
                 {' '}
                 <strong>
                   {money(selectedTotal)}
@@ -2420,13 +2420,13 @@ function CollectionsPage({ session }) {
           />
 
           <SaveButton>
-            Ø­ÙØ¸ Ø§Ù„ØªØ­ØµÙŠÙ„ ÙˆØ±Ø¨Ø· Ø§Ù„ÙÙˆØ§ØªÙŠØ±
+            حفظ التحصيل وربط الفواتير
           </SaveButton>
         </form>
       </FormCard>
 
       <ListCard
-        title="Ø§Ù„Ø´ÙŠÙƒØ§Øª ÙˆØ§Ù„ØªØ­ÙˆÙŠÙ„Ø§Øª Ø§Ù„Ù…Ø³Ø¬Ù„Ø©"
+        title="الشيكات والتحويلات المسجلة"
         loading={false}
         empty={!rows.length}
         onRefresh={load}
@@ -2434,14 +2434,14 @@ function CollectionsPage({ session }) {
         <table style={styles.table}>
           <thead>
             <tr>
-              <th style={styles.th}>Ø§Ù„Ù†ÙˆØ¹</th>
-              <th style={styles.th}>Ø§Ù„Ø±Ù‚Ù…</th>
-              <th style={styles.th}>Ø§Ù„Ø¨Ù†Ùƒ</th>
-              <th style={styles.th}>Ø§Ù„ØªØ§Ø±ÙŠØ®</th>
-              <th style={styles.th}>Ø§Ù„Ù…Ø¨Ù„Øº</th>
-              <th style={styles.th}>Ø£Ø±Ù‚Ø§Ù… Ø§Ù„ÙÙˆØ§ØªÙŠØ±</th>
-              <th style={styles.th}>Ø§Ù„Ø¨ÙŠØ§Ù†</th>
-              <th style={styles.th}>Ø¥Ø¬Ø±Ø§Ø¡</th>
+              <th style={styles.th}>النوع</th>
+              <th style={styles.th}>الرقم</th>
+              <th style={styles.th}>البنك</th>
+              <th style={styles.th}>التاريخ</th>
+              <th style={styles.th}>المبلغ</th>
+              <th style={styles.th}>أرقام الفواتير</th>
+              <th style={styles.th}>البيان</th>
+              <th style={styles.th}>إجراء</th>
             </tr>
           </thead>
 
@@ -2469,7 +2469,7 @@ function CollectionsPage({ session }) {
                 </td>
 
                 <td style={styles.td}>
-                  {Array.isArray(row.invoice_ids) ? row.invoice_ids.map(id => invoices.find(inv => inv.id === id)?.invoice_number || id).join('ØŒ ') : '-'}
+                  {Array.isArray(row.invoice_ids) ? row.invoice_ids.map(id => invoices.find(inv => inv.id === id)?.invoice_number || id).join('، ') : '-'}
                 </td>
 
                 <td style={styles.td}>
@@ -2483,7 +2483,7 @@ function CollectionsPage({ session }) {
                       remove(row.id)
                     }
                   >
-                    Ø­Ø°Ù
+                    حذف
                   </button>
                 </td>
               </tr>
@@ -2496,7 +2496,7 @@ function CollectionsPage({ session }) {
 }
 
 /* =========================================================
-   Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±
+   التقارير
 ========================================================= */
 
 
@@ -2511,16 +2511,16 @@ const [invoiceNumbers, setInvoiceNumbers] = useState({})
   const [showReport, setShowReport] = useState(false)
 
   const reportTitles = {
-    salaries: 'ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ù…Ø±ØªØ¨Ø§Øª',
-    vacations: 'ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ø¥Ø¬Ø§Ø²Ø§Øª',
-    advances: 'ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ø³Ù„Ù',
-    collections: 'ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ø´ÙŠÙƒØ§Øª ÙˆØ§Ù„ØªØ­ÙˆÙŠÙ„Ø§Øª Ø§Ù„Ø¨Ù†ÙƒÙŠØ©',
-    invoice_collected: 'ØªÙ‚Ø±ÙŠØ± Ø§Ù„ÙÙˆØ§ØªÙŠØ± Ø§Ù„Ù…Ø­ØµÙ„Ø©',
-    invoice_uncollected: 'ØªÙ‚Ø±ÙŠØ± Ø§Ù„ÙÙˆØ§ØªÙŠØ± ØºÙŠØ± Ø§Ù„Ù…Ø­ØµÙ„Ø©',
-    custody: 'ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ø¹Ù‡Ø¯Ø©',
-    custody_settlements: 'ØªÙ‚Ø±ÙŠØ± ØªØµÙÙŠØ© Ø§Ù„Ø¹Ù‡Ø¯Ø©',
-    employees: 'ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ù…ÙˆØ¸ÙÙŠÙ†',
-    purchases: 'ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ù…Ø´ØªØ±ÙŠØ§Øª',
+    salaries: 'تقرير المرتبات',
+    vacations: 'تقرير الإجازات',
+    advances: 'تقرير السلف',
+    collections: 'تقرير الشيكات والتحويلات البنكية',
+    invoice_collected: 'تقرير الفواتير المحصلة',
+    invoice_uncollected: 'تقرير الفواتير غير المحصلة',
+    custody: 'تقرير العهدة',
+    custody_settlements: 'تقرير تصفية العهدة',
+    employees: 'تقرير الموظفين',
+    purchases: 'تقرير المشتريات',
   }
 
   const tableNames = {
@@ -2565,8 +2565,8 @@ const [invoiceNumbers, setInvoiceNumbers] = useState({})
         query = query.eq(
           'status',
           reportType === 'invoice_collected'
-            ? 'Ù…Ø­ØµÙ„Ø©'
-            : 'ØºÙŠØ± Ù…Ø­ØµÙ„Ø©'
+            ? 'محصلة'
+            : 'غير محصلة'
         )
       }
 
@@ -2706,7 +2706,7 @@ const [invoiceNumbers, setInvoiceNumbers] = useState({})
     }
 
     if (Array.isArray(value)) {
-      return value.join('ØŒ ')
+      return value.join('، ')
     }
 
     return value ?? ''
@@ -2715,47 +2715,47 @@ const [invoiceNumbers, setInvoiceNumbers] = useState({})
   function getColumns() {
   if (reportType === 'salaries') {
     return [
-      ['employee', 'Ø§Ù„Ù…ÙˆØ¸Ù'],
-      ['month', 'Ø§Ù„Ø´Ù‡Ø±'],
-      ['base_salary', 'Ø§Ù„Ù…Ø±ØªØ¨ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ'],
-      ['deductions', 'Ø§Ù„Ø®ØµÙˆÙ…Ø§Øª'],
-      ['advances', 'Ø§Ù„Ø³Ù„Ù'],
-      ['net', 'Ø§Ù„ØµØ§ÙÙŠ'],
+      ['employee', 'الموظف'],
+      ['month', 'الشهر'],
+      ['base_salary', 'المرتب الأساسي'],
+      ['deductions', 'الخصومات'],
+      ['advances', 'السلف'],
+      ['net', 'الصافي'],
     ]
   }
 
   if (reportType === 'vacations') {
   return [
-    ['employee', 'Ø§Ù„Ù…ÙˆØ¸Ù'],
-    ['from', 'Ù…Ù†'],
-    ['to', 'Ø¥Ù„Ù‰'],
-    ['days', 'Ø¹Ø¯Ø¯ Ø§Ù„Ø£ÙŠØ§Ù…'],
-    ['month', 'Ø§Ù„Ø´Ù‡Ø±'],
+    ['employee', 'الموظف'],
+    ['from', 'من'],
+    ['to', 'إلى'],
+    ['days', 'عدد الأيام'],
+    ['month', 'الشهر'],
   ]
 }
 if (reportType === 'advances') {
   return [
-    ['employee', 'Ø§Ù„Ù…ÙˆØ¸Ù'],
-    ['amount', 'Ø§Ù„Ù…Ø¨Ù„Øº'],
-    ['installments', 'Ø¹Ø¯Ø¯ Ø§Ù„Ø£Ù‚Ø³Ø§Ø·'],
-    ['deduction', 'Ù‚ÙŠÙ…Ø© Ø§Ù„Ø®ØµÙ…'],
-    ['salary_month', 'Ø±Ø§ØªØ¨ Ø´Ù‡Ø±'],
-    ['date', 'Ø§Ù„ØªØ§Ø±ÙŠØ®'],
-    ['month', 'Ø§Ù„Ø´Ù‡Ø±'],
-    ['statement', 'Ø§Ù„Ø¨ÙŠØ§Ù†'],
+    ['employee', 'الموظف'],
+    ['amount', 'المبلغ'],
+    ['installments', 'عدد الأقساط'],
+    ['deduction', 'قيمة الخصم'],
+    ['salary_month', 'راتب شهر'],
+    ['date', 'التاريخ'],
+    ['month', 'الشهر'],
+    ['statement', 'البيان'],
   ]
 }
 
     if (reportType === 'collections') {
       return [
-        ['type', 'Ø§Ù„Ù†ÙˆØ¹'],
-        ['number', 'Ø±Ù‚Ù… Ø§Ù„Ø´ÙŠÙƒ / Ø§Ù„ØªØ­ÙˆÙŠÙ„'],
-        ['bank', 'Ø§Ù„Ø¨Ù†Ùƒ'],
-        ['date', 'Ø§Ù„ØªØ§Ø±ÙŠØ®'],
-        ['month', 'Ø§Ù„Ø´Ù‡Ø±'],
-        ['invoice_ids', 'Ø§Ù„ÙÙˆØ§ØªÙŠØ±'],
-        ['amount', 'Ø§Ù„Ù…Ø¨Ù„Øº'],
-        ['statement', 'Ø§Ù„Ø¨ÙŠØ§Ù†'],
+        ['type', 'النوع'],
+        ['number', 'رقم الشيك / التحويل'],
+        ['bank', 'البنك'],
+        ['date', 'التاريخ'],
+        ['month', 'الشهر'],
+        ['invoice_ids', 'الفواتير'],
+        ['amount', 'المبلغ'],
+        ['statement', 'البيان'],
       ]
     }
 
@@ -2765,59 +2765,59 @@ if (reportType === 'advances') {
       reportType === 'invoice_uncollected'
     ) {
       return [
-        ['invoice_number', 'Ø±Ù‚Ù… Ø§Ù„ÙØ§ØªÙˆØ±Ø©'],
-        ['date', 'Ø§Ù„ØªØ§Ø±ÙŠØ®'],
-        ['month', 'Ø§Ù„Ø´Ù‡Ø±'],
-        ['company', 'Ø§Ù„Ø´Ø±ÙƒØ©'],
-        ['amount', 'Ø§Ù„Ù…Ø¨Ù„Øº'],
-        ['status', 'Ø§Ù„Ø­Ø§Ù„Ø©'],
-        ['collection_number', 'Ø±Ù‚Ù… Ø§Ù„ØªØ­ØµÙŠÙ„'],
-        ['bank', 'Ø§Ù„Ø¨Ù†Ùƒ'],
+        ['invoice_number', 'رقم الفاتورة'],
+        ['date', 'التاريخ'],
+        ['month', 'الشهر'],
+        ['company', 'الشركة'],
+        ['amount', 'المبلغ'],
+        ['status', 'الحالة'],
+        ['collection_number', 'رقم التحصيل'],
+        ['bank', 'البنك'],
       ]
     }
 
     if (reportType === 'custody') {
       return [
-        ['employee', 'Ø§Ù„Ù…ÙˆØ¸Ù'],
-        ['item', 'Ø§Ù„ØµÙ†Ù'],
-        ['quantity', 'Ø§Ù„ÙƒÙ…ÙŠØ©'],
-        ['price', 'Ø§Ù„Ø³Ø¹Ø±'],
-        ['total', 'Ø§Ù„Ø¥Ø¬Ù…Ø§Ù„ÙŠ'],
-        ['date', 'Ø§Ù„ØªØ§Ø±ÙŠØ®'],
-        ['month', 'Ø§Ù„Ø´Ù‡Ø±'],
+        ['employee', 'الموظف'],
+        ['item', 'الصنف'],
+        ['quantity', 'الكمية'],
+        ['price', 'السعر'],
+        ['total', 'الإجمالي'],
+        ['date', 'التاريخ'],
+        ['month', 'الشهر'],
       ]
     }
 
     if (reportType === 'custody_settlements') {
       return [
-        ['employee', 'Ø§Ù„Ù…ÙˆØ¸Ù'],
-        ['amount', 'Ø§Ù„Ù…Ø¨Ù„Øº'],
-        ['date', 'Ø§Ù„ØªØ§Ø±ÙŠØ®'],
-        ['month', 'Ø§Ù„Ø´Ù‡Ø±'],
-        ['statement', 'Ø§Ù„Ø¨ÙŠØ§Ù†'],
+        ['employee', 'الموظف'],
+        ['amount', 'المبلغ'],
+        ['date', 'التاريخ'],
+        ['month', 'الشهر'],
+        ['statement', 'البيان'],
       ]
     }
 
     if (reportType === 'employees') {
       return [
-        ['name', 'Ø§Ù„Ø§Ø³Ù…'],
-        ['phone', 'Ø§Ù„Ù‡Ø§ØªÙ'],
-        ['job', 'Ø§Ù„ÙˆØ¸ÙŠÙØ©'],
-        ['month', 'Ø±Ø§ØªØ¨ Ø´Ù‡Ø±'],
-        ['base_salary', 'Ø§Ù„Ù…Ø±ØªØ¨ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ'],
-        ['address', 'Ø§Ù„Ø¹Ù†ÙˆØ§Ù†'],
+        ['name', 'الاسم'],
+        ['phone', 'الهاتف'],
+        ['job', 'الوظيفة'],
+        ['month', 'راتب شهر'],
+        ['base_salary', 'المرتب الأساسي'],
+        ['address', 'العنوان'],
       ]
     }
 
     if (reportType === 'purchases') {
       return [
-        ['item', 'Ø§Ù„ØµÙ†Ù'],
-        ['quantity', 'Ø§Ù„ÙƒÙ…ÙŠØ©'],
-        ['price', 'Ø§Ù„Ø³Ø¹Ø±'],
-        ['total', 'Ø§Ù„Ø¥Ø¬Ù…Ø§Ù„ÙŠ'],
-        ['date', 'Ø§Ù„ØªØ§Ø±ÙŠØ®'],
-        ['month', 'Ø§Ù„Ø´Ù‡Ø±'],
-        ['statement', 'Ø§Ù„Ø¨ÙŠØ§Ù†'],
+        ['item', 'الصنف'],
+        ['quantity', 'الكمية'],
+        ['price', 'السعر'],
+        ['total', 'الإجمالي'],
+        ['date', 'التاريخ'],
+        ['month', 'الشهر'],
+        ['statement', 'البيان'],
       ]
     }
 
@@ -2972,7 +2972,7 @@ if (reportType === 'advances') {
   .map((id) =>
     invoiceNumbers[String(id)] || id
   )
-  .join('ØŒ ')
+  .join('، ')
       }
 
       return ids
@@ -2991,7 +2991,7 @@ if (reportType === 'advances') {
           textAlign: 'center',
           color: '#777',
         }}>
-          Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¨ÙŠØ§Ù†Ø§Øª Ù„Ù‡Ø°Ø§ Ø§Ù„ØªÙ‚Ø±ÙŠØ±
+          لا توجد بيانات لهذا التقرير
         </div>
       )
     }
@@ -3046,7 +3046,7 @@ if (reportType === 'advances') {
 
   function printReport() {
     if (!showReport) {
-      alert('Ø§Ø¶ØºØ· Ø£ÙˆÙ„Ø§Ù‹ Ø¹Ù„Ù‰ Ø¹Ø±Ø¶ Ø§Ù„ØªÙ‚Ø±ÙŠØ±')
+      alert('اضغط أولاً على عرض التقرير')
       return
     }
 
@@ -3074,7 +3074,7 @@ if (reportType === 'advances') {
     const win = window.open('', '_blank')
 
     if (!win) {
-      alert('ÙŠØ±Ø¬Ù‰ Ø§Ù„Ø³Ù…Ø§Ø­ Ø¨ÙØªØ­ Ù†Ø§ÙØ°Ø© Ø§Ù„Ø·Ø¨Ø§Ø¹Ø©')
+      alert('يرجى السماح بفتح نافذة الطباعة')
       return
     }
 
@@ -3097,12 +3097,12 @@ if (reportType === 'advances') {
       '</style>' +
       '</head>' +
       '<body>' +
-      '<h1>Ø´Ø±ÙƒØ© Ø§Ù„ÙƒØªØ±ÙˆØ¨Ø§ÙˆØ± Ù„Ù„Ù…Ù‚Ø§ÙˆÙ„Ø§Øª</h1>' +
+      '<h1>شركة الكتروباور للمقاولات</h1>' +
       '<h2 style="text-align:center">' +
       reportTitles[reportType] +
       '</h2>' +
       '<p>' +
-      (month ? 'Ø§Ù„Ø´Ù‡Ø±: ' + month : '') +
+      (month ? 'الشهر: ' + month : '') +
       '</p>' +
       '<table>' +
       '<thead><tr><th>#</th>' +
@@ -3123,7 +3123,7 @@ if (reportType === 'advances') {
 
   return (
     <div dir="rtl">
-      <FormCard title="Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±">
+      <FormCard title="التقارير">
 
         <div style={{
           display: 'grid',
@@ -3133,7 +3133,7 @@ if (reportType === 'advances') {
 
           <div>
             <label style={labelStyle}>
-              Ù†ÙˆØ¹ Ø§Ù„ØªÙ‚Ø±ÙŠØ±
+              نوع التقرير
             </label>
 
             <select
@@ -3145,12 +3145,12 @@ if (reportType === 'advances') {
               }}
               style={inputStyle}
             >
-              {role === 'admin' && (<><option value="salaries">Ø§Ù„Ù…Ø±ØªØ¨Ø§Øª</option><option value="advances">Ø§Ù„Ø³Ù„Ù</option><option value="custody">Ø§Ù„Ø¹Ù‡Ø¯Ø©</option><option value="custody_settlements">ØªØµÙÙŠØ© Ø§Ù„Ø¹Ù‡Ø¯Ø©</option><option value="employees">Ø§Ù„Ù…ÙˆØ¸ÙÙŠÙ†</option><option value="purchases">Ø§Ù„Ù…Ø´ØªØ±ÙŠØ§Øª</option></>)}<option value="vacations">Ø§Ù„Ø¥Ø¬Ø§Ø²Ø§Øª</option><option value="collections">Ø§Ù„Ø´ÙŠÙƒØ§Øª ÙˆØ§Ù„ØªØ­ÙˆÙŠÙ„Ø§Øª Ø§Ù„Ø¨Ù†ÙƒÙŠØ©</option><option value="invoice_collected">Ø§Ù„ÙÙˆØ§ØªÙŠØ± Ø§Ù„Ù…Ø­ØµÙ„Ø©</option><option value="invoice_uncollected">Ø§Ù„ÙÙˆØ§ØªÙŠØ± ØºÙŠØ± Ø§Ù„Ù…Ø­ØµÙ„Ø©</option></select>
+              {role === 'admin' && (<><option value="salaries">المرتبات</option><option value="advances">السلف</option><option value="custody">العهدة</option><option value="custody_settlements">تصفية العهدة</option><option value="employees">الموظفين</option><option value="purchases">المشتريات</option></>)}<option value="vacations">الإجازات</option><option value="collections">الشيكات والتحويلات البنكية</option><option value="invoice_collected">الفواتير المحصلة</option><option value="invoice_uncollected">الفواتير غير المحصلة</option></select>
           </div>
 
           <div>
             <label style={labelStyle}>
-              Ø§Ù„Ø´Ù‡Ø±
+              الشهر
             </label>
 
             <input
@@ -3166,7 +3166,7 @@ if (reportType === 'advances') {
 
           <div>
             <label style={labelStyle}>
-              Ø§Ù„Ù…ÙˆØ¸Ù
+              الموظف
             </label>
 
             <select
@@ -3178,7 +3178,7 @@ if (reportType === 'advances') {
               style={inputStyle}
             >
               <option value="">
-                ÙƒÙ„ Ø§Ù„Ù…ÙˆØ¸ÙÙŠÙ†
+                كل الموظفين
               </option>
 
               {employees.map((employee) => (
@@ -3209,7 +3209,7 @@ if (reportType === 'advances') {
               await load()
             }}
           >
-            Ø¹Ø±Ø¶ Ø§Ù„ØªÙ‚Ø±ÙŠØ±
+            عرض التقرير
           </button>
 
           <button
@@ -3217,7 +3217,7 @@ if (reportType === 'advances') {
             style={styles.secondaryButton}
             onClick={printReport}
           >
-            Ø·Ø¨Ø§Ø¹Ø© / PDF
+            طباعة / PDF
           </button>
 
         </div>
@@ -3267,7 +3267,7 @@ const inputStyle = {
 
 
 /* =========================================================
-   Ø§Ù„ÙÙˆØ§ØªÙŠØ± - Ø§Ù„ÙƒÙˆØ¯ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ Ø§Ù„Ø¹Ø§Ù…Ù„
+   الفواتير - الكود الأساسي العامل
 ========================================================= */
 
 function InvoicesPage({ session, role }) {
@@ -3283,7 +3283,7 @@ function InvoicesPage({ session, role }) {
     amount: '',
     company: '',
     statement: '',
-    status: 'ØºÙŠØ± Ù…Ø­ØµÙ„Ø©',
+    status: 'غير محصلة',
   })
 
   useEffect(() => {
@@ -3319,7 +3319,7 @@ function InvoicesPage({ session, role }) {
 
     if (error) {
       setError(
-        'ØªØ¹Ø°Ø± ØªØ­Ù…ÙŠÙ„ Ø§Ù„ÙÙˆØ§ØªÙŠØ±: ' +
+        'تعذر تحميل الفواتير: ' +
           error.message
       )
     } else {
@@ -3344,7 +3344,7 @@ function InvoicesPage({ session, role }) {
     setError('')
 
     if (!form.invoice_number.trim()) {
-      setError('Ø§ÙƒØªØ¨ Ø±Ù‚Ù… Ø§Ù„ÙØ§ØªÙˆØ±Ø©')
+      setError('اكتب رقم الفاتورة')
       return
     }
 
@@ -3352,7 +3352,7 @@ function InvoicesPage({ session, role }) {
       !form.amount ||
       Number(form.amount) <= 0
     ) {
-      setError('Ø§ÙƒØªØ¨ Ù…Ø¨Ù„Øº Ø§Ù„ÙØ§ØªÙˆØ±Ø©')
+      setError('اكتب مبلغ الفاتورة')
       return
     }
 
@@ -3376,12 +3376,12 @@ function InvoicesPage({ session, role }) {
 
     if (error) {
       setError(
-        'Ù„Ù… ÙŠØªÙ… Ø­ÙØ¸ Ø§Ù„ÙØ§ØªÙˆØ±Ø©: ' +
+        'لم يتم حفظ الفاتورة: ' +
           error.message
       )
     } else {
       setMessage(
-        'ØªÙ… Ø­ÙØ¸ Ø§Ù„ÙØ§ØªÙˆØ±Ø© Ø¨Ù†Ø¬Ø§Ø­ âœ…'
+        'تم حفظ الفاتورة بنجاح ✅'
       )
 
       setForm({
@@ -3390,7 +3390,7 @@ function InvoicesPage({ session, role }) {
         amount: '',
         company: '',
         statement: '',
-        status: 'ØºÙŠØ± Ù…Ø­ØµÙ„Ø©',
+        status: 'غير محصلة',
       })
 
       await loadInvoices()
@@ -3402,13 +3402,13 @@ function InvoicesPage({ session, role }) {
   async function deleteInvoice(id) {
     if (role !== 'admin') {
       setError(
-        'Ù„ÙŠØ³ Ù„Ø¯ÙŠÙƒ ØµÙ„Ø§Ø­ÙŠØ© Ø­Ø°Ù Ø§Ù„ÙÙˆØ§ØªÙŠØ±'
+        'ليس لديك صلاحية حذف الفواتير'
       )
       return
     }
 
     const confirmed = window.confirm(
-      'Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ù‡Ø°Ù‡ Ø§Ù„ÙØ§ØªÙˆØ±Ø©ØŸ'
+      'هل أنت متأكد من حذف هذه الفاتورة؟'
     )
 
     if (!confirmed) return
@@ -3423,12 +3423,12 @@ function InvoicesPage({ session, role }) {
 
     if (error) {
       setError(
-        'Ù„Ù… ÙŠØªÙ… Ø­Ø°Ù Ø§Ù„ÙØ§ØªÙˆØ±Ø©: ' +
+        'لم يتم حذف الفاتورة: ' +
           error.message
       )
     } else {
       setMessage(
-        'ØªÙ… Ø­Ø°Ù Ø§Ù„ÙØ§ØªÙˆØ±Ø© âœ…'
+        'تم حذف الفاتورة ✅'
       )
       await loadInvoices()
     }
@@ -3438,14 +3438,14 @@ function InvoicesPage({ session, role }) {
     <div>
       <div style={styles.invoiceFormCard}>
         <h3 style={styles.formTitle}>
-          Ø¥Ø¶Ø§ÙØ© ÙØ§ØªÙˆØ±Ø© Ø¬Ø¯ÙŠØ¯Ø©
+          إضافة فاتورة جديدة
         </h3>
 
         <form onSubmit={saveInvoice}>
           <div style={styles.formGrid}>
             <div>
               <label style={styles.label}>
-                Ø±Ù‚Ù… Ø§Ù„ÙØ§ØªÙˆØ±Ø©
+                رقم الفاتورة
               </label>
 
               <input
@@ -3459,13 +3459,13 @@ function InvoicesPage({ session, role }) {
                     e.target.value
                   )
                 }
-                placeholder="Ø±Ù‚Ù… Ø§Ù„ÙØ§ØªÙˆØ±Ø©"
+                placeholder="رقم الفاتورة"
               />
             </div>
 
             <div>
               <label style={styles.label}>
-                Ø§Ù„ØªØ§Ø±ÙŠØ®
+                التاريخ
               </label>
 
               <input
@@ -3483,7 +3483,7 @@ function InvoicesPage({ session, role }) {
 
             <div>
               <label style={styles.label}>
-                Ø§Ù„Ù…Ø¨Ù„Øº
+                المبلغ
               </label>
 
               <input
@@ -3498,13 +3498,13 @@ function InvoicesPage({ session, role }) {
                     e.target.value
                   )
                 }
-                placeholder="Ø§Ù„Ù…Ø¨Ù„Øº"
+                placeholder="المبلغ"
               />
             </div>
 
             <div>
               <label style={styles.label}>
-                Ø§Ù„Ø´Ø±ÙƒØ©
+                الشركة
               </label>
 
               <input
@@ -3516,13 +3516,13 @@ function InvoicesPage({ session, role }) {
                     e.target.value
                   )
                 }
-                placeholder="Ø§Ø³Ù… Ø§Ù„Ø´Ø±ÙƒØ©"
+                placeholder="اسم الشركة"
               />
             </div>
 
             <div>
               <label style={styles.label}>
-                Ø­Ø§Ù„Ø© Ø§Ù„ÙØ§ØªÙˆØ±Ø©
+                حالة الفاتورة
               </label>
 
               <select
@@ -3535,19 +3535,19 @@ function InvoicesPage({ session, role }) {
                   )
                 }
               >
-                <option value="ØºÙŠØ± Ù…Ø­ØµÙ„Ø©">
-                  ØºÙŠØ± Ù…Ø­ØµÙ„Ø©
+                <option value="غير محصلة">
+                  غير محصلة
                 </option>
 
-                <option value="Ù…Ø­ØµÙ„Ø©">
-                  Ù…Ø­ØµÙ„Ø©
+                <option value="محصلة">
+                  محصلة
                 </option>
               </select>
             </div>
 
             <div style={styles.fullWidth}>
               <label style={styles.label}>
-                Ø§Ù„Ø¨ÙŠØ§Ù†
+                البيان
               </label>
 
               <textarea
@@ -3559,7 +3559,7 @@ function InvoicesPage({ session, role }) {
                     e.target.value
                   )
                 }
-                placeholder="Ø¨ÙŠØ§Ù† Ø§Ù„ÙØ§ØªÙˆØ±Ø©"
+                placeholder="بيان الفاتورة"
               />
             </div>
           </div>
@@ -3582,31 +3582,31 @@ function InvoicesPage({ session, role }) {
             disabled={saving}
           >
             {saving
-              ? 'Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø­ÙØ¸...'
-              : 'Ø­ÙØ¸ Ø§Ù„ÙØ§ØªÙˆØ±Ø©'}
+              ? 'جاري الحفظ...'
+              : 'حفظ الفاتورة'}
           </button>
         </form>
       </div>
 
       <div style={styles.invoiceListCard}>
         <div style={styles.listHeader}>
-          <h3>Ø§Ù„ÙÙˆØ§ØªÙŠØ± Ø§Ù„Ù…Ø³Ø¬Ù„Ø©</h3>
+          <h3>الفواتير المسجلة</h3>
 
           <button
             style={styles.refreshButton}
             onClick={loadInvoices}
           >
-            ØªØ­Ø¯ÙŠØ«
+            تحديث
           </button>
         </div>
 
         {loading ? (
           <div style={styles.loadingSmall}>
-            Ø¬Ø§Ø±ÙŠ ØªØ­Ù…ÙŠÙ„ Ø§Ù„ÙÙˆØ§ØªÙŠØ±...
+            جاري تحميل الفواتير...
           </div>
         ) : invoices.length === 0 ? (
           <div style={styles.noData}>
-            Ù„Ø§ ØªÙˆØ¬Ø¯ ÙÙˆØ§ØªÙŠØ± Ù…Ø³Ø¬Ù„Ø© Ø­ØªÙ‰ Ø§Ù„Ø¢Ù†.
+            لا توجد فواتير مسجلة حتى الآن.
           </div>
         ) : (
           <div style={styles.tableWrapper}>
@@ -3614,32 +3614,32 @@ function InvoicesPage({ session, role }) {
               <thead>
                 <tr>
                   <th style={styles.th}>
-                    Ø±Ù‚Ù… Ø§Ù„ÙØ§ØªÙˆØ±Ø©
+                    رقم الفاتورة
                   </th>
 
                   <th style={styles.th}>
-                    Ø§Ù„ØªØ§Ø±ÙŠØ®
+                    التاريخ
                   </th>
 
                   <th style={styles.th}>
-                    Ø§Ù„Ù…Ø¨Ù„Øº
+                    المبلغ
                   </th>
 
                   <th style={styles.th}>
-                    Ø§Ù„Ø´Ø±ÙƒØ©
+                    الشركة
                   </th>
 
                   <th style={styles.th}>
-                    Ø§Ù„Ø¨ÙŠØ§Ù†
+                    البيان
                   </th>
 
                   <th style={styles.th}>
-                    Ø§Ù„Ø­Ø§Ù„Ø©
+                    الحالة
                   </th>
 
                   {role === 'admin' && (
                     <th style={styles.th}>
-                      Ø¥Ø¬Ø±Ø§Ø¡
+                      إجراء
                     </th>
                   )}
                 </tr>
@@ -3679,7 +3679,7 @@ function InvoicesPage({ session, role }) {
                       <span
                         style={
                           invoice.status ===
-                          'Ù…Ø­ØµÙ„Ø©'
+                          'محصلة'
                             ? styles.collected
                             : styles.notCollected
                         }
@@ -3700,7 +3700,7 @@ function InvoicesPage({ session, role }) {
                             )
                           }
                         >
-                          Ø­Ø°Ù
+                          حذف
                         </button>
                       </td>
                     )}
@@ -3738,7 +3738,7 @@ function Login() {
       })
 
     if (error) {
-      setError('Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø¯Ø®ÙˆÙ„ ØºÙŠØ± ØµØ­ÙŠØ­Ø©')
+      setError('بيانات الدخول غير صحيحة')
     }
 
     setLoading(false)
@@ -3755,18 +3755,18 @@ function Login() {
         </div>
 
         <h1 style={styles.loginTitle}>
-          Ø´Ø±ÙƒØ© Ø§Ù„ÙƒØªØ±ÙˆØ¨Ø§ÙˆØ± Ù„Ù„Ù…Ù‚Ø§ÙˆÙ„Ø§Øª
+          شركة الكتروباور للمقاولات
         </h1>
 
         <p style={styles.loginSub}>
-          Ø´Ø±ÙƒØ© Ø§Ù„ÙƒØªØ±ÙˆØ¨Ø§ÙˆØ± - ØµÙŠØ§Ù†Ø© Ø¨Ù†ÙˆÙƒ
+          شركة الكتروباور - صيانة بنوك
         </p>
 
         <form onSubmit={login}>
           <input
             style={styles.input}
             type="email"
-            placeholder="Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ"
+            placeholder="البريد الإلكتروني"
             value={email}
             onChange={(e) =>
               setEmail(e.target.value)
@@ -3777,7 +3777,7 @@ function Login() {
           <input
             style={styles.input}
             type="password"
-            placeholder="ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ±"
+            placeholder="كلمة المرور"
             value={password}
             onChange={(e) =>
               setPassword(e.target.value)
@@ -3797,8 +3797,8 @@ function Login() {
             disabled={loading}
           >
             {loading
-              ? 'Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø¯Ø®ÙˆÙ„...'
-              : 'ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„'}
+              ? 'جاري الدخول...'
+              : 'تسجيل الدخول'}
           </button>
         </form>
       </div>
@@ -3807,7 +3807,7 @@ function Login() {
 }
 
 /* =========================================================
-   Ù…ÙƒÙˆÙ†Ø§Øª Ù…Ø³Ø§Ø¹Ø¯Ø©
+   مكونات مساعدة
 ========================================================= */
 
 function Field({
@@ -3824,8 +3824,8 @@ function Field({
         {label}
       </label>
 
-      {label === 'Ø§Ù„Ø¨ÙŠØ§Ù†' ||
-      label === 'Ù…Ù„Ø§Ø­Ø¸Ø§Øª' ? (
+      {label === 'البيان' ||
+      label === 'ملاحظات' ? (
         <textarea
           style={styles.textarea}
           value={value}
@@ -3870,7 +3870,7 @@ function SelectField({
         }
       >
         <option value="">
-          Ø§Ø®ØªØ± {label}
+          اختر {label}
         </option>
 
         {options.map((option) => (
@@ -3913,13 +3913,13 @@ function ListCard({
           style={styles.refreshButton}
           onClick={onRefresh}
         >
-          ØªØ­Ø¯ÙŠØ«
+          تحديث
         </button>
       </div>
 
       {empty ? (
         <div style={styles.noData}>
-          Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¨ÙŠØ§Ù†Ø§Øª Ø­ØªÙ‰ Ø§Ù„Ø¢Ù†.
+          لا توجد بيانات حتى الآن.
         </div>
       ) : (
         <div style={styles.tableWrapper}>
@@ -3941,7 +3941,7 @@ function SaveButton({
       disabled={loading}
     >
       {loading
-        ? 'Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø­ÙØ¸...'
+        ? 'جاري الحفظ...'
         : children}
     </button>
   )
@@ -4004,7 +4004,7 @@ function getPageTitle(id) {
     (x) => x.id === id
   )
 
-  return item?.title || 'Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©'
+  return item?.title || 'الرئيسية'
 }
 
 /* =========================================================
