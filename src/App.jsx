@@ -2589,6 +2589,10 @@ const [invoiceNumbers, setInvoiceNumbers] = useState({})
         }
       }
 
+      const { data: rows, error } = await query
+      if (error) throw error
+      setData(rows || [])
+
       if (reportType === 'collections') {
   const invoiceIds = [
     ...new Set(
